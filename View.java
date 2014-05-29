@@ -20,11 +20,11 @@ import javax.swing.text.MaskFormatter;
  */
 public class View{
     JFrame janela;
-    private JLabel lbnome;
+    private JLabel lbnome, lbnome2;
     private JLabel lbendereco;
     private JLabel lbdata;
     private JLabel lbx;
-    private JTextField tfnome;
+    private JTextField tfnome, tfnome2;
     private JTextField tfendereco;
     private JFormattedTextField tfdata;
     private JButton btsalvar;
@@ -32,12 +32,18 @@ public class View{
     private ImageIcon imgsalvar;
     private ImageIcon imgcancelar;
     private MaskFormatter mask;
+    private JTabbedPane tpabas;
+    private JPanel painel1, painel2;
     public View(){
         innit();
         defEvent();
     }
     public void innit(){
         janela = new JFrame("Alunos");
+        painel1 = new JPanel(null);
+        painel2 = new JPanel(null);
+        
+        //PAINEL 1
         imgsalvar = new ImageIcon("C:\\salvar.png");
         imgcancelar = new ImageIcon("C:\\cancelar.png");
         imgsalvar.setImage(imgsalvar.getImage().getScaledInstance(80, 70, 100));  
@@ -66,35 +72,51 @@ public class View{
         janela.setLocation(400, 150);
         janela.setVisible(true);
         
-        lbnome.setBounds(20, 0, 50, 100);
-        lbendereco.setBounds(20, 30, 100, 100);
-        lbdata.setBounds(20, 60, 100, 100);
+        lbnome.setBounds(20, -25, 50, 100);
+        lbendereco.setBounds(20, 10, 100, 100);
+        lbdata.setBounds(20, 45, 100, 100);
         lbx.setBounds(20, 100, 50, 100);
-        lbx.setBounds(20, 150, 50, 100);
         
-        tfnome.setBounds(67, 38, 300, 25);
-        tfendereco.setBounds(90, 68, 277, 25);
-        tfdata.setBounds(110, 98, 130, 25);
+        tfnome.setBounds(67, 14, 300, 25);
+        tfendereco.setBounds(90, 49, 277, 25);
+        tfdata.setBounds(110, 82, 130, 25);
         
-        btsalvar.setBounds(110, 150, 80, 70);
+        btsalvar.setBounds(105, 140, 80, 70);
         btsalvar.setBorderPainted(false);
         btsalvar.setBackground(janela.getBackground());
-        btcancelar.setBounds(210, 150, 80, 70);
+        btcancelar.setBounds(215, 140, 80, 70);
         btcancelar.setBorderPainted(false);
         btcancelar.setBackground(janela.getBackground());
         
-        janela.add(btsalvar);
-        janela.add(btcancelar);
+        //PAINEL 2
+        lbnome2 = new JLabel("Nome");
+        lbnome2.setBounds(20, -25, 50, 100);
         
-        janela.add(tfnome);
-        janela.add(tfendereco);
-        janela.add(tfdata);
+        tfnome2 = new JTextField();
+        tfnome2.setBounds(67, 14, 300, 25);
         
-        janela.add(lbnome);
-        janela.add(lbendereco);
-        janela.add(lbdata);
-        janela.add(lbx);
-                
+        //ADCIONAR ITENS
+        painel1.add(btsalvar);
+        painel1.add(btcancelar);
+        
+        painel1.add(tfnome);
+        painel1.add(tfendereco);
+        painel1.add(tfdata);
+        
+        painel1.add(lbnome);
+        painel1.add(lbendereco);
+        painel1.add(lbdata);
+        painel1.add(lbx);
+        
+        painel2.add(tfnome2);
+        painel2.add(lbnome2);
+        
+        
+        tpabas = new JTabbedPane();
+        tpabas.add("Cadastrar", painel1);
+        tpabas.add("Pesquisar", painel2);
+        
+        janela.add(tpabas);
     }
     public void defEvent(){
         
