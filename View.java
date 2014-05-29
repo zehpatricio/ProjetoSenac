@@ -27,10 +27,8 @@ public class View{
     private JTextField tfnome, tfnome2;
     private JTextField tfendereco;
     private JFormattedTextField tfdata;
-    private JButton btsalvar;
-    private JButton btcancelar;
-    private ImageIcon imgsalvar;
-    private ImageIcon imgcancelar;
+    private JButton btsalvar, btcancelar, btlistar, btpesquisar;
+    private ImageIcon imgsalvar, imgcancelar, imgpesquisar, imglistar;
     private MaskFormatter mask;
     private JTabbedPane tpabas;
     private JPanel painel1, painel2;
@@ -46,8 +44,12 @@ public class View{
         //PAINEL 1
         imgsalvar = new ImageIcon("C:\\salvar.png");
         imgcancelar = new ImageIcon("C:\\cancelar.png");
-        imgsalvar.setImage(imgsalvar.getImage().getScaledInstance(80, 70, 100));  
+        imgpesquisar = new ImageIcon("C:\\lupa.png");
+        imglistar = new ImageIcon("C:\\listar.png");
+        imgsalvar.setImage(imgsalvar.getImage().getScaledInstance(80, 70, 100));    
         imgcancelar.setImage(imgcancelar.getImage().getScaledInstance(80, 70, 100));  
+        imgpesquisar.setImage(imgpesquisar.getImage().getScaledInstance(80, 70, 100));
+        imglistar.setImage(imglistar.getImage().getScaledInstance(80, 70, 100));
         lbnome = new JLabel("Nome");
         lbendereco = new JLabel("Endereco");
         lbdata = new JLabel("Data de Nasc.");
@@ -95,6 +97,17 @@ public class View{
         tfnome2 = new JTextField();
         tfnome2.setBounds(67, 14, 300, 25);
         
+        
+        btpesquisar = new JButton(imgpesquisar);
+        btpesquisar.setBounds(105, 140, 80, 70);
+        btpesquisar.setBorderPainted(false);
+        btpesquisar.setBackground(janela.getBackground());
+        
+        btlistar = new JButton(imglistar);
+        btlistar.setBounds(215, 140, 80, 70);
+        btlistar.setBorderPainted(false);
+        btlistar.setBackground(janela.getBackground());
+        
         //ADCIONAR ITENS
         painel1.add(btsalvar);
         painel1.add(btcancelar);
@@ -110,7 +123,8 @@ public class View{
         
         painel2.add(tfnome2);
         painel2.add(lbnome2);
-        
+        painel2.add(btlistar);
+        painel2.add(btpesquisar);
         
         tpabas = new JTabbedPane();
         tpabas.add("Cadastrar", painel1);
