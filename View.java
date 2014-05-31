@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package ProjetoSenac;
 
 import javax.swing.*;
 import java.awt.Event;
 import java.awt.*;
+import java.sql.SQLException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.MaskFormatter;
@@ -32,6 +28,8 @@ public class View{
     private MaskFormatter mask;
     private JTabbedPane tpabas;
     private JPanel painel1, painel2;
+    private List<Aluno> alunoList = new AlunoControler().listarAlunos();
+    private int registroAtual = 0;
     public View(){
         innit();
         defEvent();
@@ -133,6 +131,71 @@ public class View{
         janela.add(tpabas);
     }
     public void defEvent(){
-        
+    
+    
     }
+    
+    public void limpartf(){
+            tfnome.setText("");
+            tfendereco.setText("");
+            tfdata.setText("");
+        }
+    
+    private void onClickAlterar() {
+        AlunoControler cc = new AlunoControler();
+        long id = alunoList.get(registroAtual).getId();
+        try {
+            cc.alteraAluno(id,000, tfnome.getText(), tfdata.getText(), tfendereco.getText());
+            limpartf();
+            alunoList = new AlunoControler().listarAlunos();
+        } catch (SQLException e) {
+        } catch (ParseException e) {
+        }
+    }
+ 
+    private void onClickSalvar() throws ParseException {
+        AlunoControler cc = new AlunoControler();
+            cc.salvarAluno(001, tfnome.getText(), tfdata.getText(), tfendereco.getText());
+            JOptionPane.showMessageDialog(null, "Contato salvo com sucesso!");
+            alunoList = new AlunoControler().listarAlunos();
+    }
+ 
+    private void onClickExcluir() {
+        AlunoControler cc = new AlunoControler();
+        long id = alunoList.get(registroAtual).getId();
+        try {
+            cc.excluirALuno(id);
+            JOptionPane.showMessageDialog(null, "Contato excluido com sucesso!");
+            limpartf();
+            alunoList = new AlunoControler().listarAlunos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, 
+                "Nao foi possivel excluir o contato!n" + 
+                e.getLocalizedMessage()
+            );
+        }
+    }
+ 
+    private void onClickPesquizar() {
+        AlunoControler cc = new AlunoControler();
+        try {
+            Aluno c = cc.buscaContatoPorNome(txtLocalizar.getText());
+            tfnome.setText(c.getNome());
+            tfendereco.setText(c.getNome());
+            tfdata.setText(
+                new SimpleDateFormat("dd/MM/yyyy").format(c.getNascimento())
+            );
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, 
+                "Ocorreu um erro, tente novamente!n" + 
+                e.getLocalizedMessage()
+            );
+        } catch (NullPointerException e){
+            JOptionPane.showMessageDialog(null, 
+                "Contato não localizdo ou não existe!n" + 
+                e.getLocalizedMessage()
+            );
+        }
+    }
+
 }
