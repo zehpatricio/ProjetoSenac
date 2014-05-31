@@ -11,6 +11,7 @@ public class Aluno {
     private String endereco;
     private Date nascimento;
     private int matricula;
+    private Long id;
 
     public Aluno(){
         this.nome = "Sem Nome";
@@ -27,6 +28,12 @@ public class Aluno {
     }
     public int getMatricula(){
         return matricula;
+    }
+    public Long getid(){
+        return id;
+    }
+    public void setid(long id){
+        this.id = id;
     }
     public void setMatricula(int matricula){
         this.matricula = matricula;
@@ -46,5 +53,10 @@ public class Aluno {
     public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
     }
+
+    void setId(long aLong) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     
 }

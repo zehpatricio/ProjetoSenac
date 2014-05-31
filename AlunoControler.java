@@ -34,9 +34,17 @@ public class AlunoControler {
         
         new AlunoDAO().alterar(aluno);
     }
-    public List<Aluno> listarAlunos() {
+    public List<Aluno> listarAlunos(){
         AlunoDAO dao = new AlunoDAO();
+        try {
             return dao.findAlunos();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, 
+                "Problemas ao localizar aluno" + 
+                e.getLocalizedMessage()
+            );
+        }
+        return null;
     }
     public void excluirALuno(long id) throws SQLException{
         new AlunoDAO().excluir(id);

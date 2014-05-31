@@ -1,19 +1,21 @@
 package ProjetoSenac;
 
+import java.awt.Color;
 import javax.swing.*;
 import java.awt.Event;
-import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.text.MaskFormatter;
-
 /**
  *
  * @author Patricio JP
  */
+import java.util.List;
 public class View{
     JFrame janela;
     private JLabel lbnome, lbnome2;
@@ -131,8 +133,21 @@ public class View{
         janela.add(tpabas);
     }
     public void defEvent(){
-    
-    
+        btsalvar.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try {
+                    onClickSalvar();
+                } catch (ParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possivel salvar!");
+                }
+            }
+        });
+        btcancelar.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                limpartf();
+            }
+        });
+        
     }
     
     public void limpartf(){
@@ -143,7 +158,7 @@ public class View{
     
     private void onClickAlterar() {
         AlunoControler cc = new AlunoControler();
-        long id = alunoList.get(registroAtual).getId();
+        long id = alunoList.get(registroAtual).getid();
         try {
             cc.alteraAluno(id,000, tfnome.getText(), tfdata.getText(), tfendereco.getText());
             limpartf();
@@ -159,10 +174,10 @@ public class View{
             JOptionPane.showMessageDialog(null, "Contato salvo com sucesso!");
             alunoList = new AlunoControler().listarAlunos();
     }
- 
+
     private void onClickExcluir() {
         AlunoControler cc = new AlunoControler();
-        long id = alunoList.get(registroAtual).getId();
+        long id = alunoList.get(registroAtual).getid();
         try {
             cc.excluirALuno(id);
             JOptionPane.showMessageDialog(null, "Contato excluido com sucesso!");
@@ -179,7 +194,7 @@ public class View{
     private void onClickPesquizar() {
         AlunoControler cc = new AlunoControler();
         try {
-            Aluno c = cc.buscaContatoPorNome(txtLocalizar.getText());
+            Aluno c = cc.buscaPorNome(tfnome2.getText());
             tfnome.setText(c.getNome());
             tfendereco.setText(c.getNome());
             tfdata.setText(

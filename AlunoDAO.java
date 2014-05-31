@@ -28,43 +28,35 @@ public class AlunoDAO extends ManipulaBanco{
     public Aluno findByName(String nome) throws SQLException {
         String select = "SELECT * FROM CONTATOS WHERE nome = ?";
         Aluno aluno = null;
-        PreparedStatement stmt = getConnection().prepareStatement(select);
-             
-        stmt.setString(1, nome);
-        ResultSet rs = stmt.executeQuery();
- 
-        while (rs.next()) {
-            aluno = new Aluno();
-            aluno.setNome(rs.getString("Nome"));
-            aluno.setEndereco(rs.getString("Endereco"));
-            aluno.setMatricula(Integer.parseInt(rs.getString("Matricula")));
-            aluno.setNascimento(rs.getDate("Nasc"));
+        try (PreparedStatement stmt = getConnection().prepareStatement(select)) {
+            stmt.setString(1, nome);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    aluno = new Aluno();
+                    aluno.setNome(rs.getString("Nome"));
+                    aluno.setEndereco(rs.getString("Endereco"));
+                    aluno.setMatricula(Integer.parseInt(rs.getString("Matricula")));
+                    aluno.setNascimento(rs.getDate("Nasc"));
+                }
+            }
         }
- 
-        rs.close();
-        stmt.close();
         return aluno;
     }
     public List<Aluno> findAlunos() throws SQLException{
-        List<Aluno> alunos = new ArrayList<Aluno>();
+        List<Aluno> alunos = new ArrayList<>();
         String select = "SELECT * FROM CONTATOS";
- 
-        PreparedStatement stmt = getConnection().prepareStatement(select);
-             
-        ResultSet rs = stmt.executeQuery();
- 
-        while (rs.next()) {
-            Aluno aluno = new Aluno();
-            aluno.setId(rs.getLong("id"));
-            aluno.setNome(rs.getString("Nome"));
-            aluno.setNascimento(rs.getDate("Nasc"));
-            aluno.setEndereco(rs.getString("Endereco"));
-            aluno.setMatricula(Integer.parseInt(rs.getString("Matricula")));
-            alunos.add(aluno);
+        try (PreparedStatement stmt = getConnection().prepareStatement(select); ResultSet rs = stmt.executeQuery()) {
+     
+            while (rs.next()) {
+                Aluno aluno = new Aluno();
+                aluno.setId(rs.getLong("id"));
+                aluno.setNome(rs.getString("Nome"));
+                aluno.setNascimento(rs.getDate("Nasc"));
+                aluno.setEndereco(rs.getString("Endereco"));
+                aluno.setMatricula(Integer.parseInt(rs.getString("Matricula")));
+                alunos.add(aluno);
+            }
         }
- 
-        rs.close();
-        stmt.close();
         return alunos;
     }
      public void excluir(long id) throws SQLException {
