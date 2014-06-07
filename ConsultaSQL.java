@@ -55,6 +55,47 @@ public class ConsultaSQL {
             JOptionPane.showMessageDialog(null, nomes.toUpperCase(), "Resultado da Pesquisa", JOptionPane.PLAIN_MESSAGE);
         }
     }
+    public int verificaMatricula(int matricula){
+        ResultSet rs;
+        String sql = "SELECT * FROM alunos";
+        int resp = 0;
+        try{
+            rs = meuState.executeQuery(sql);
+            while(rs.next()){
+                if(rs.getInt("matricula") == matricula){
+                    resp = 1;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resp;
+    }
+    public int buscaMatricula(int matricula){
+        ResultSet rs;
+        String sql = "SELECT * FROM alunos";
+        String nomes="Matric  |   Nome                   | Endereco\n\n";
+        int resp=0;
+        try{
+            rs = meuState.executeQuery(sql);
+            while(rs.next()){
+                if(rs.getInt("matricula") == matricula){
+                    nomes+="    "+rs.getString("matricula")+"      |  "+rs.getString("nome")+
+                    "                 |  "+rs.getString("endereco")+"\n";
+                    resp = 1;
+                    break;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConsultaSQL.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(resp==0){
+            JOptionPane.showMessageDialog(null, "Matricula não encontrada!", "Erro", JOptionPane.PLAIN_MESSAGE);
+        }else{
+            JOptionPane.showMessageDialog(null, nomes.toUpperCase(), "Resultado da Pesquisa", JOptionPane.PLAIN_MESSAGE);
+        }
+        return resp;
+    }
     public ConsultaSQL(){
         String url;
         url = "jdbc:odbc:Banco_LP";

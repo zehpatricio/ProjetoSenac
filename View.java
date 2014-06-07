@@ -103,7 +103,8 @@ public class View{
         
         tfnome2 = new JTextField();
         tfnome2.setBounds(67, 14, 300, 25);
-        
+        tfmatricula2 = new JTextField();
+        tfmatricula2.setBounds(280, 82, 88, 25);
         
         btpesquisar = new JButton(imgpesquisar);
         btpesquisar.setBounds(50, 140, 80, 70);
@@ -140,6 +141,10 @@ public class View{
         painel2.add(btlistar);
         painel2.add(btpesquisar);
         painel2.add(btexcluir);
+        painel2.add(tfmatricula2);
+        painel2.add(tfmatricula2);
+        painel2.add(lbmatricula2);
+        painel2.add(lbmatricula2);
         
         tpabas = new JTabbedPane();
         tpabas.add("Cadastrar", painel1);
@@ -173,32 +178,44 @@ public class View{
                 onClickPesquizar();
             }
         });
+        btexcluir.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                onClickExcluir();
+            }
+        });
     }
     
     public void limpartf(){
             tfnome.setText("");
             tfendereco.setText("");
+            tfmatricula.setText("");
             tfdata.setText("");
             tfnome2.setText("");
+            tfmatricula2.setText("");
         }
     
     private void onClickAlterar() {
     }
  
     private void onClickSalvar() throws ParseException {
-        controleBD.inserirDados(tfnome.getText().toUpperCase(), tfendereco.getText(), Integer.parseInt(tfmatricula.getText()));
+        if(controleBD.inserirDados(tfnome.getText().toUpperCase(), tfendereco.getText(), Integer.parseInt(tfmatricula.getText())) == 1){
         limpartf();
+        }
     }
 
     private void onClickExcluir() {
-        controleBD.excluirDados(Integer.parseInt());
-        
+        controleBD.excluirDados(Integer.parseInt(tfmatricula2.getText()));
+        limpartf();
     }
     private void onClickListar(){
         controleBD.buscarDados();
     }
     private void onClickPesquizar() {
-        controleBD.buscarPorNome(tfnome2.getText());
+        if(tfmatricula2.equals("")){
+            controleBD.buscarPorNome(tfnome2.getText());
+        }else{
+            controleBD.buscarPorMatricula(Integer.parseInt(tfmatricula2.getText()));
+        }
         limpartf();
     }
 

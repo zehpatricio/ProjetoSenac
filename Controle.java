@@ -20,7 +20,9 @@ public class Controle {
         FabricaDeConexao fabrica = new FabricaDeConexao("bd", "root", "root");
         conexao = fabrica.obterConexao();
     }
-    public void inserirDados(String nome, String endereco, int matricula){
+    public int inserirDados(String nome, String endereco, int matricula){
+        ConsultaSQL consult = new ConsultaSQL();
+      if(consult.verificaMatricula(matricula) == 0){
         //Falta fazer a DATA DE NASCIMENTO
         String sql = "INSERT INTO bd.Alunos (nome, endereco, matricula) VALUES (?, ?, ?)";
         PreparedStatement pstmt;
@@ -34,7 +36,11 @@ public class Controle {
         } catch (SQLException ex) {
             Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        return 1;
+      }else{
+          JOptionPane.showMessageDialog(null, "Matricula já cadastrada! \nPor favor escolha outra...", "Matricula inválida", JOptionPane.PLAIN_MESSAGE);
+          return 0;
+      }
     }
     public void buscarDados(){
         ConsultaSQL consult = new ConsultaSQL();
@@ -44,36 +50,31 @@ public class Controle {
         ConsultaSQL consult = new ConsultaSQL();
         consult.buscarNome(nome);
     }
-    public void pesquisarNome(){
-        
+    public void buscarPorMatricula(int matricula){
+        ConsultaSQL consult = new ConsultaSQL();
+        consult.buscaMatricula(matricula);
     }
-
     /**
      *
      * @param matricula
      */
     public void excluirDados(int matricula){
-        String sql = "DELET FROM bd.Alunos WHERE matricula = ?";
+        ConsultaSQL consult = new ConsultaSQL();
+        if(consult.verificaMatricula(matricula)==1){
+        String sql = "DELETE FROM bd.Alunos WHERE matricula = ?";
         PreparedStatement pstmt;
         try {
             pstmt = conexao.prepareStatement(sql);
             pstmt.setInt(1, matricula);
             pstmt.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Aluno Excluido do registro!", "Excluido", JOptionPane.PLAIN_MESSAGE);
         } catch (SQLException ex) {
             Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
+        }
+      }else{
+            JOptionPane.showMessageDialog(null, "Matricula nao encontrada!", "Não Excluido", JOptionPane.PLAIN_MESSAGE);
         }
     }
-/*    public void buscarPorNome(String nome){
-        String sql = "DELET FROM bd.Alunos WHERE matricula = ?";
-        PreparedStatement pstmt;
-        try {
-            pstmt = conexao.prepareStatement(sql);
-            pstmt.setString(1, String.valueOf(nome));
-            pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }*/
     public int getUltimo(){
         ResultSet rs;
         PreparedStatement pstmt;
