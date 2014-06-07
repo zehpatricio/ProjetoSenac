@@ -1,31 +1,43 @@
 /*
- * To change this template, choose Tools | Templates
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package ProjetoSenac;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
- * @author Aluno
+ * @author Patricio JP
  */
 public class FabricaDeConexao {
-    private static String url = "jdbc:mysql://localhost:3306/alunos";
-    private static String nome = "root";
-    private static String senha = "root";
-    private static final String driver = "com.mysql.jdbc.Driver";
-    public static Connection getConnection() {
+    private String nomeBanco;
+    private String usuario;
+    private String senha;
+    
+    private void setarValores(String nomeBanco, String usuario, String senha){
+        this.nomeBanco = nomeBanco;
+        this.usuario = usuario;
+        this.senha = senha;
+    }
+    
+    public FabricaDeConexao(String nomeBanco, String usuario, String senha){
+        setarValores(nomeBanco, usuario, senha);
+    }
+    public Connection obterConexao(){
+        Connection conexao = null;
+        String url = "jdbc:odbc:Banco_LP";
         try {
-            Class.forName(driver);
-            Connection connection = DriverManager.getConnection(url, nome, senha);
-            return connection;
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            conexao = DriverManager.getConnection(url, this.usuario, this.senha);
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(FabricaDeConexao.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            return conexao;
         }
-        return null;
     }
 }

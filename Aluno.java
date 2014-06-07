@@ -11,7 +11,6 @@ public class Aluno {
     private String endereco;
     private Date nascimento;
     private int matricula;
-    private Long id;
 
     public Aluno(){
         this.nome = "Sem Nome";
@@ -28,13 +27,7 @@ public class Aluno {
     }
     public int getMatricula(){
         return matricula;
-    }
-    public Long getid(){
-        return id;
-    }
-    public void setid(long id){
-        this.id = id;
-    }
+    }    
     public void setMatricula(int matricula){
         this.matricula = matricula;
     }
