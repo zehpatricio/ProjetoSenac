@@ -59,7 +59,7 @@ public class View{
         lbx.setForeground(Color.white);
         lbmatricula = new JLabel("Matric.");
         try {
-            mask = new MaskFormatter("  ##  /  ##  /  ####");
+            mask = new MaskFormatter("  ## / ## / ####");
         } catch (ParseException ex) {
             Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -198,7 +198,7 @@ public class View{
     }
  
     private void onClickSalvar() throws ParseException {
-        if(controleBD.inserirDados(tfnome.getText().toUpperCase(), tfendereco.getText(), Integer.parseInt(tfmatricula.getText())) == 1){
+        if(controleBD.inserirDados(tfnome.getText().toUpperCase(), tfendereco.getText(), Integer.parseInt(tfmatricula.getText()), tfdata.getText()) == 1){
         limpartf();
         }
     }

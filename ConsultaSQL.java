@@ -43,7 +43,7 @@ public class ConsultaSQL {
             while(rs.next()){
                 if(rs.getString("nome").toUpperCase().equals(nome.toUpperCase())){
                     nomes+="    "+rs.getString("matricula")+"      |  "+rs.getString("nome")+
-                            "                 |  "+rs.getString("endereco")+"\n";
+                    "                 |  "+rs.getString("endereco")+"   | "+rs.getString("data")+"\n";
                 }
             }
         } catch (SQLException ex) {
@@ -74,14 +74,14 @@ public class ConsultaSQL {
     public int buscaMatricula(int matricula){
         ResultSet rs;
         String sql = "SELECT * FROM alunos";
-        String nomes="Matric  |   Nome                   | Endereco\n\n";
+        String nomes="Matric  |   Nome                   | Endereco          | Data Nasc.\n\n";
         int resp=0;
         try{
             rs = meuState.executeQuery(sql);
             while(rs.next()){
                 if(rs.getInt("matricula") == matricula){
                     nomes+="    "+rs.getString("matricula")+"      |  "+rs.getString("nome")+
-                    "                 |  "+rs.getString("endereco")+"\n";
+                    "                 |  "+rs.getString("endereco")+"   | "+rs.getString("data")+"\n";
                     resp = 1;
                     break;
                 }

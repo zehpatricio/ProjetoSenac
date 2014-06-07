@@ -20,17 +20,18 @@ public class Controle {
         FabricaDeConexao fabrica = new FabricaDeConexao("bd", "root", "root");
         conexao = fabrica.obterConexao();
     }
-    public int inserirDados(String nome, String endereco, int matricula){
+    public int inserirDados(String nome, String endereco, int matricula, String data){
         ConsultaSQL consult = new ConsultaSQL();
       if(consult.verificaMatricula(matricula) == 0){
         //Falta fazer a DATA DE NASCIMENTO
-        String sql = "INSERT INTO bd.Alunos (nome, endereco, matricula) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO bd.Alunos (nome, endereco, matricula, data) VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt;
         try {
             pstmt = conexao.prepareStatement(sql);
             pstmt.setString(1, nome);
             pstmt.setString(2, endereco);
             pstmt.setInt(3, matricula);
+            pstmt.setString(4, data);
             pstmt.executeUpdate();
             JOptionPane.showMessageDialog(null, "Dados salvos com sucesso!");
         } catch (SQLException ex) {
@@ -74,20 +75,5 @@ public class Controle {
       }else{
             JOptionPane.showMessageDialog(null, "Matricula nao encontrada!", "Não Excluido", JOptionPane.PLAIN_MESSAGE);
         }
-    }
-    public int getUltimo(){
-        ResultSet rs;
-        PreparedStatement pstmt;
-        String sql = "SELECT * FROM bd.Alunos";
-        ultimo = 0;
-        try {
-            pstmt = conexao.prepareStatement(sql);
-            rs = pstmt.getResultSet();
-            while(rs.next()){
-                ultimo = rs.getInt("matricula");}
-        } catch (SQLException ex) {
-            Logger.getLogger(Controle.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return ultimo;
     }
 }

@@ -9,7 +9,7 @@ import java.util.Date;
 public class Aluno {
     private String nome;
     private String endereco;
-    private Date nascimento;
+    private String nascimento;
     private int matricula;
 
     public Aluno(){
@@ -17,7 +17,7 @@ public class Aluno {
         this.endereco = "Sem Endereço";
         this.matricula = 0;
     }
-    public Aluno(String nome, String endereco, Date data){
+    public Aluno(String nome, String endereco, String data){
         this.nome = nome;
         this.endereco = endereco;
         this.nascimento = data;
@@ -34,7 +34,7 @@ public class Aluno {
     public String getEndereco() {
         return endereco;
     }
-    public Date getNascimento() {
+    public String getNascimento() {
         return nascimento;
     }
     public void setNome(String nome) {
@@ -43,7 +43,7 @@ public class Aluno {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-    public void setNascimento(Date nascimento) {
+    public void setNascimento(String nascimento) {
         this.nascimento = nascimento;
     }
 
